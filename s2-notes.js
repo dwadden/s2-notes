@@ -35,6 +35,7 @@ function add_notes_field() {
             <textarea id="note-text" name="note-text"></textarea>
           </div>
         </div>
+            <button id="saveNotes" class="icon-button button--primary"><span class="cl-button__label">Save</span></button>
       </div>`;
 
     // Add the HTML.
@@ -44,6 +45,9 @@ function add_notes_field() {
     // Convert to markdown.
     // Uses https://github.com/sparksuite/simplemde-markdown-editor.
     const simplemde = new SimpleMDE({ element: document.getElementById("note-text") });
+
+    // Register event listener on `Save` button.
+    document.getElementById("saveNotes").addEventListener("click", save_notes);
 }
 
 function load_notes() {
@@ -56,8 +60,7 @@ function save_notes() {
     console.log("Not implemented.");
 }
 
-
-
+// Invoked on page load.
 (function() {
     'use strict';
     window.addEventListener("load", import_simplemde);

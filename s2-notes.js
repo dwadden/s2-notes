@@ -8,28 +8,29 @@
 // ==/UserScript==
 
 
-function printme() {
-    console.log("I'm running");
-}
-
 
 function addme() {
-    console.log("Inserting stuff");
-
     console.log(document.readyState);
 
-    const newDiv = document.createElement("div");
-    newDiv.id = "notes"
+    // Uses template literals
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+    const my_html = `<div id="notes" class="card">
+    <div class="card-header">
+      <div class="card-header-title">
+        <h4 class="card-header-title__title">Notes.</h4>
+      </div>
+    </div>
+    <div class="card-content">
+      <div class="card-content-main">
+        <textarea id="note-text" name="note-text" style="box-sizing:border-box; width:100%; height:100%;">
+        </textarea>
+      </div>
+    </div>
+  </div>`;
 
-    // and give it some content
-    const newContent = document.createTextNode("Hi there and greetings!");
-
-    // add the text node to the newly created div
-    newDiv.appendChild(newContent);
-
-    // add the newly created element and its content into the DOM
+    // Add the HTML.
     const currentDiv = document.getElementById("extracted");
-    currentDiv.parentNode.insertBefore(newDiv, currentDiv);
+    currentDiv.insertAdjacentHTML("beforebegin", my_html)
 }
 
 

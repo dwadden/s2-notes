@@ -46,6 +46,18 @@ function add_notes_field() {
     const simplemde = new SimpleMDE({ element: document.getElementById("note-text") });
 }
 
+function load_notes() {
+    // Check to see if notes exist for this document. If so, get them.
+    console.log("Not implemented.");
+}
+
+function save_notes() {
+    // Save notes to file.
+    console.log("Not implemented.");
+}
+
+
+
 (function() {
     'use strict';
     window.addEventListener("load", import_simplemde);

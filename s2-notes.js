@@ -8,32 +8,86 @@
 // ==/UserScript==
 
 
-function printme() {
-    console.log("I'm running");
+function import_simplemde() {
+    // Import the SimpleMDE library: https://simplemde.com/.
+
+    // Get the javascript. See https://stackoverflow.com/questions/19737031/loading-scripts-after-page-load.
+    const tag = document.createElement("script");
+    tag.src = "https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"
+    document.getElementsByTagName("head")[0].appendChild(tag);
+
+    // Get the CSS. See https://stackoverflow.com/questions/30752482/fetch-css-file-after-page-loads.
+    const styles = "@import url('https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css');";
+    const newSS=document.createElement('link');
+    newSS.rel='stylesheet';
+    newSS.href='data:text/css,'+escape(styles);
+    document.getElementsByTagName("head")[0].appendChild(newSS);
 }
 
+function add_notes_field() {
+    // Modify the HTML page source to add notes.
 
-function addme() {
-    console.log("Inserting stuff");
+    // Create a literal for the HTML to insert.
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+    const my_html = `<div id="notes" class="card">
+        <div class="card-content">
+          <div class="card-content-main">
+            <textarea id="note-text" name="note-text"></textarea>
+          </div>
+        </div>
+            <button id="saveNotes" class="icon-button button--primary"><span class="cl-button__label">Save</span></button>
+      </div>`;
 
-    console.log(document.readyState);
-
-    const newDiv = document.createElement("div");
-    newDiv.id = "notes"
-
-    // and give it some content
-    const newContent = document.createTextNode("Hi there and greetings!");
-
-    // add the text node to the newly created div
-    newDiv.appendChild(newContent);
-
-    // add the newly created element and its content into the DOM
+    // Add the HTML.
     const currentDiv = document.getElementById("extracted");
-    currentDiv.parentNode.insertBefore(newDiv, currentDiv);
+    currentDiv.insertAdjacentHTML("beforebegin", my_html)
+
+    // Convert to markdown.
+    // Uses https://github.com/sparksuite/simplemde-markdown-editor.
+    const simplemde = new SimpleMDE({ element: document.getElementById("note-text") });
+
+    // Register event listener on `Save` button.
+    document.getElementById("saveNotes").addEventListener("click", save_notes);
 }
 
+function get_document_info() {
+    // Get S2 ID and title from the webpage.
+    try {
+        const s2_id = parseInt(document.querySelector('[data-selenium-selector="corpus-id"]').innerText.split(": ")[1]);
+        const title = document.querySelector('[name="citation_title"]').content;
+        return {"s2_id": s2_id,
+                "title": title
+        }
+    } catch (e) {
+        alert("Unable to get document info from page");
+        return null;
+    }
+}
 
+function load_notes() {
+    // Check to see if notes exist for this document. If so, get them.
+    const document_info = get_document_info();
+    if (document_info === null) {
+        // If there was a problem getting document info, just return.
+        return
+    }
+    console.log("Not implemented.");
+}
+
+function save_notes() {
+    // Save notes to file.
+    const document_info = get_document_info();
+    if (document_info === null) {
+        // If there was a problem getting document info, just return.
+        return
+    }
+    console.log("Not implemented.");
+}
+
+// Invoked on page load.
 (function() {
     'use strict';
-    window.addEventListener("load", addme)
+    window.addEventListener("load", import_simplemde);
+    // Wait a bit to make sure the libraries get loaded.
+    window.addEventListener("load", () => setTimeout(add_notes_field, 100));
 })();

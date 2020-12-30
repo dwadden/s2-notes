@@ -44,9 +44,18 @@ def set_notes():
         "notes": request.json.get("notes", "")
     }
 
-    with open(f"{NOTES_DIR}/{paper_id}.json", "w") as f:
-        json.dump(file_json, f)
+    fname = f"{NOTES_DIR}/{paper_id}.json"
 
-    return jsonify({
-        "data saved to " + str(paper_id) + ".json": file_json
-        }), 201
+    if (not file_json["notes"].strip()) and (not os.path.exists(fname)):
+        # If the file doesn't exist and we didn't write any notes, don't write.
+        return jsonify({
+            "data saved to " + str(paper_id) + ".json": file_json
+            }), 200
+    else:
+        # Otherwise, write to file.
+        with open(fname, "w") as f:
+            json.dump(file_json, f)
+
+        return jsonify({
+            "data saved to " + str(paper_id) + ".json": file_json
+            }), 201

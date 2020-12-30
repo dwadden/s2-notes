@@ -39,7 +39,6 @@ function add_notes_field() {
             <textarea id="note-text" name="note-text"></textarea>
           </div>
         </div>
-            <button id="saveNotes" class="icon-button button--primary"><span class="cl-button__label">Save</span></button>
       </div>`;
 
     // Add the HTML.
@@ -50,11 +49,19 @@ function add_notes_field() {
     // Uses https://github.com/sparksuite/simplemde-markdown-editor.
     window.simplemde = new SimpleMDE({ element: document.getElementById("note-text") });
 
-    // Register event listener on `Save` button.
-    document.getElementById("saveNotes").addEventListener("click", save_notes);
-
     // Load notes.
     load_notes();
+
+    // After 2 seconds of no changes to buffer, write changes to file.
+    let delay;
+    window.simplemde.codemirror.on("change",
+        function () {
+            clearTimeout(delay);
+            delay = setTimeout(save_notes, 2000)
+        });
+
+    // Also save any time the page is closed.
+    window.addEventListener("beforeunload", save_notes)
 }
 
 function get_document_info() {
@@ -118,6 +125,7 @@ function save_notes() {
     const request = "http://127.0.0.1:5000/SetNotes"
     fetch(request, {
         method: "POST",
+        keepalive: true,  // Ensures that the request goes through even if the page closes.
         headers: {
             "Content-Type": "application/json",
         },

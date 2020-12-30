@@ -3,6 +3,7 @@
 In this directory, type:
  
 export FLASK_APP=app.py
+
 flask run
 
 # Endpoints

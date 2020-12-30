@@ -107,6 +107,7 @@ function save_notes() {
       console.log('Success:', data);
     })
     .catch((error) => {
+      alert("Failed to save file");
       console.error('Error:', error);
     });
 }

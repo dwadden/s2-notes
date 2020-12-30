@@ -16,7 +16,7 @@ def get_notes(paper_id):
     if not os.path.exists(f'{NOTES_DIR}/{paper_id}.json'):
         return 'File does not exist', 404
 
-    with open(f'notes_ex/{paper_id}.json') as f:
+    with open(f'{NOTES_DIR}/{paper_id}.json') as f:
         data = json.load(f)
     print(data)
     return json.dumps(data)

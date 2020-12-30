@@ -62,9 +62,11 @@ function get_document_info() {
     try {
         const paper_id = parseInt(document.querySelector('[data-selenium-selector="corpus-id"]').innerText.split(": ")[1]);
         const title = document.querySelector('[name="citation_title"]').content;
+        const author = document.querySelector('[name="citation_author"]').content;
         return {
             "paper_id": paper_id,
-            "title": title
+            "title": title,
+            "author": author
         }
     } catch (e) {
         alert("Unable to get document info from page");
@@ -108,6 +110,7 @@ function save_notes() {
     const data = {
         "paper_id": document_info.paper_id,
         "title": document_info.title,
+        "author": document_info.author,
         "notes": notes
     };
 

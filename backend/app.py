@@ -17,6 +17,7 @@ def get_notes(paper_id):
         # If notes don't exist for this paper, just return an empty string.
         data = {"paper_id": None,
                 "title": None,
+                "author": None,
                 "notes": ""}
     else:
         # Otherwise load the data.
@@ -39,6 +40,7 @@ def set_notes():
     file_json = {
         "paper_id": paper_id,
         "title": request.json["title"],
+        "author": request.json["author"],
         "notes": request.json.get("notes", "")
     }
 

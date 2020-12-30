@@ -2,17 +2,20 @@ import json
 import os
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
-NOTES_DIR = 'notes_ex'
+
+NOTES_DIR = "/Users/dwadden/Google-Drive/uw/research/paper-notes"
 
 
 @app.route('/GetNotes/<int:paper_id>')
 def get_notes(paper_id):
     if not os.path.exists(f'{NOTES_DIR}/{paper_id}.json'):
         return 'File does not exist', 404
- 
+
     with open(f'notes_ex/{paper_id}.json') as f:
         data = json.load(f)
     print(data)
@@ -30,6 +33,7 @@ def set_notes():
 
     paper_id = request.json['paper_id']
     file_json = {
+        "paper_id": paper_id,
         'title': request.json['title'],
         'notes': request.json.get('notes', ""),
     }
@@ -40,4 +44,3 @@ def set_notes():
     return jsonify({
         'data saved to ' + str(paper_id) + '.json': file_json
         }), 201
-

@@ -44,7 +44,7 @@ function add_notes_field() {
 
     // Convert to markdown.
     // Uses https://github.com/sparksuite/simplemde-markdown-editor.
-    const simplemde = new SimpleMDE({ element: document.getElementById("note-text") });
+    window.simplemde = new SimpleMDE({ element: document.getElementById("note-text") });
 
     // Register event listener on `Save` button.
     document.getElementById("saveNotes").addEventListener("click", save_notes);
@@ -53,9 +53,9 @@ function add_notes_field() {
 function get_document_info() {
     // Get S2 ID and title from the webpage.
     try {
-        const s2_id = parseInt(document.querySelector('[data-selenium-selector="corpus-id"]').innerText.split(": ")[1]);
+        const paper_id = parseInt(document.querySelector('[data-selenium-selector="corpus-id"]').innerText.split(": ")[1]);
         const title = document.querySelector('[name="citation_title"]').content;
-        return {"s2_id": s2_id,
+        return {"paper_id": paper_id,
                 "title": title
         }
     } catch (e) {
@@ -72,6 +72,11 @@ function load_notes() {
         return
     }
     console.log("Not implemented.");
+    // Send a get request.
+    const paper_id = document_info.paper_id;
+    const request = `http://127.0.0.1:5000/SetNotes/${paper_id}`;
+
+    // Send a get request using `fetch` and populate.
 }
 
 function save_notes() {
@@ -81,7 +86,29 @@ function save_notes() {
         // If there was a problem getting document info, just return.
         return
     }
-    console.log("Not implemented.");
+    const notes = window.simplemde.value();
+    const data = {
+        "paper_id": document_info.paper_id,
+        "title": document_info.title,
+        "notes": notes
+    };
+
+    // Send a post request using `fetch`.
+    const request = "http://127.0.0.1:5000/SetNotes"
+    fetch(request, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 }
 
 // Invoked on page load.

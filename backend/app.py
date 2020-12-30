@@ -18,7 +18,6 @@ def get_notes(paper_id):
 
     with open(f'{NOTES_DIR}/{paper_id}.json') as f:
         data = json.load(f)
-    print(data)
     return json.dumps(data)
 
 
@@ -26,9 +25,9 @@ def get_notes(paper_id):
 def set_notes():
     if not request.json:
         return 'No data passed in', 400
-    elif not 'paper_id' in request.json:
+    elif 'paper_id' not in request.json:
         return 'Missing paper_id field', 400
-    elif not 'title' in request.json:
+    elif 'title' not in request.json:
         return 'Missing title field', 400
 
     paper_id = request.json['paper_id']

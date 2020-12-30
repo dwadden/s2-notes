@@ -8,6 +8,10 @@
 // ==/UserScript==
 
 
+// TODO(dwadden) Add some checks to make sure the S2ID remains consistent over time.
+// TODO(dwadden) Auto-save or save check?
+
+
 function import_simplemde() {
     // Import the SimpleMDE library: https://simplemde.com/.
 
@@ -18,9 +22,9 @@ function import_simplemde() {
 
     // Get the CSS. See https://stackoverflow.com/questions/30752482/fetch-css-file-after-page-loads.
     const styles = "@import url('https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css');";
-    const newSS=document.createElement('link');
-    newSS.rel='stylesheet';
-    newSS.href='data:text/css,'+escape(styles);
+    const newSS = document.createElement('link');
+    newSS.rel = 'stylesheet';
+    newSS.href = 'data:text/css,' + escape(styles);
     document.getElementsByTagName("head")[0].appendChild(newSS);
 }
 
@@ -48,6 +52,9 @@ function add_notes_field() {
 
     // Register event listener on `Save` button.
     document.getElementById("saveNotes").addEventListener("click", save_notes);
+
+    // Load notes.
+    load_notes();
 }
 
 function get_document_info() {
@@ -55,8 +62,9 @@ function get_document_info() {
     try {
         const paper_id = parseInt(document.querySelector('[data-selenium-selector="corpus-id"]').innerText.split(": ")[1]);
         const title = document.querySelector('[name="citation_title"]').content;
-        return {"paper_id": paper_id,
-                "title": title
+        return {
+            "paper_id": paper_id,
+            "title": title
         }
     } catch (e) {
         alert("Unable to get document info from page");
@@ -71,12 +79,22 @@ function load_notes() {
         // If there was a problem getting document info, just return.
         return
     }
-    console.log("Not implemented.");
     // Send a get request.
     const paper_id = document_info.paper_id;
-    const request = `http://127.0.0.1:5000/SetNotes/${paper_id}`;
+    const request = `http://127.0.0.1:5000/GetNotes/${paper_id}`;
 
     // Send a get request using `fetch` and populate.
+    fetch(request, {
+        method: "GET"
+    })
+        .then(response => response.json())
+        .then(data => {
+            window.simplemde.value(data.notes);
+        })
+        .catch((error) => {
+            alert("Failed to load file.");
+            console.error('Error:', error);
+        });
 }
 
 function save_notes() {
@@ -96,26 +114,26 @@ function save_notes() {
     // Send a post request using `fetch`.
     const request = "http://127.0.0.1:5000/SetNotes"
     fetch(request, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      alert("Failed to save file");
-      console.error('Error:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            alert("Failed to save file.");
+            console.error('Error:', error);
+        });
 }
 
 // Invoked on page load.
-(function() {
+(function () {
     'use strict';
     window.addEventListener("load", import_simplemde);
     // Wait a bit to make sure the libraries get loaded.
-    window.addEventListener("load", () => setTimeout(add_notes_field, 100));
+    window.addEventListener("load", () => setTimeout(add_notes_field, 200));
 })();

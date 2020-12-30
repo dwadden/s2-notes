@@ -50,13 +50,37 @@ function add_notes_field() {
     document.getElementById("saveNotes").addEventListener("click", save_notes);
 }
 
+function get_document_info() {
+    // Get S2 ID and title from the webpage.
+    try {
+        const s2_id = parseInt(document.querySelector('[data-selenium-selector="corpus-id"]').innerText.split(": ")[1]);
+        const title = document.querySelector('[name="citation_title"]').content;
+        return {"s2_id": s2_id,
+                "title": title
+        }
+    } catch (e) {
+        alert("Unable to get document info from page");
+        return null;
+    }
+}
+
 function load_notes() {
     // Check to see if notes exist for this document. If so, get them.
+    const document_info = get_document_info();
+    if (document_info === null) {
+        // If there was a problem getting document info, just return.
+        return
+    }
     console.log("Not implemented.");
 }
 
 function save_notes() {
     // Save notes to file.
+    const document_info = get_document_info();
+    if (document_info === null) {
+        // If there was a problem getting document info, just return.
+        return
+    }
     console.log("Not implemented.");
 }
 

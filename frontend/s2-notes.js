@@ -33,14 +33,17 @@ function add_notes_field() {
 
     // Create a literal for the HTML to insert.
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
-    const my_html = `<div id="notes" class="card">
-        <div class="card-content">
-          <div class="card-content-main">
-            <textarea id="note-text" name="note-text"></textarea>
+    const my_html = `
+        <div id="notes" class="card">
+          <div class="card-content" style="padding: 20px;">
+            <div class="card-content-main" style="padding: 0px;">
+              <textarea id="note-text" name="note-text"></textarea>
+              <div class="pagination" style="padding: 0px;">
+                <button id="saveNotes" class="icon-button button--primary"><span class="cl-button__label">Save</span></button>
+              </div>
+            </div>
           </div>
-        </div>
-            <button id="saveNotes" class="icon-button button--primary"><span class="cl-button__label">Save</span></button>
-      </div>`;
+        </div>`;
 
     // Add the HTML.
     const currentDiv = document.getElementById("extracted");

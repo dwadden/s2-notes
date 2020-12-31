@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-NOTES_DIR = "/Users/dwadden/Google-Drive/uw/research/paper-notes"
+NOTES_DIR = "/Users/dwadden/Google-Drive/uw/research/paper-notes/s2"
 
 
 @app.route("/GetNotes/<int:paper_id>")

@@ -20,6 +20,12 @@ function import_simplemde() {
     tag.src = "https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"
     document.getElementsByTagName("head")[0].appendChild(tag);
 
+    // Mathjax. This is from here: https://gist.github.com/chooco13/c280c1cc6584c97af85307028ecaebb1.
+    // I tried using a V3 of MathJax, but it didn't work.
+    const mathjax = document.createElement("script");
+    mathjax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML";
+    document.getElementsByTagName("head")[0].appendChild(mathjax);
+
     // Get the CSS. See https://stackoverflow.com/questions/30752482/fetch-css-file-after-page-loads.
     const styles = "@import url('https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css');";
     const newSS = document.createElement('link');
@@ -49,9 +55,25 @@ function add_notes_field() {
     const currentDiv = document.getElementById("extracted");
     currentDiv.insertAdjacentHTML("beforebegin", my_html)
 
+    // MathJax config from
+    // https://gist.github.com/chooco13/c280c1cc6584c97af85307028ecaebb1.
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+    });
+
     // Convert to markdown.
     // Uses https://github.com/sparksuite/simplemde-markdown-editor.
-    window.simplemde = new SimpleMDE({ element: document.getElementById("note-text") });
+    window.simplemde = new SimpleMDE({
+        element: document.getElementById("note-text"),
+        spellChecker: false,
+        previewRender: function(plainText) {
+            var preview = document.getElementsByClassName("editor-preview-side")[0];
+            preview.innerHTML = this.parent.markdown(plainText);
+            preview.setAttribute('id','editor-preview')
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub,"editor-preview"]);
+            return preview.innerHTML;
+        }
+    });
 
     // Register event listener on `Save` button.
     document.getElementById("saveNotes").addEventListener("click", save_notes);

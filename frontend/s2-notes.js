@@ -52,7 +52,12 @@ function add_notes_field() {
         </div>`;
 
     // Add the HTML.
-    const currentDiv = document.getElementById("extracted");
+    let currentDiv = document.getElementById("extracted");
+    if (currentDiv === null) {
+        // Deal with the case where there's no extracted figures (happens
+        // sometimes.)
+        currentDiv = document.getElementById("citing-papers");
+    }
     currentDiv.insertAdjacentHTML("beforebegin", my_html)
 
     // MathJax config from

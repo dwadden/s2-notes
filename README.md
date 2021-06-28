@@ -6,13 +6,14 @@ Do you use Semantic Scholar? Do you take notes when you read papers? This repo e
 
 It adds a notes section below the main information section on each paper. It supports Markdown as well as Mathjax. The notes are stored locally on your machine as `.json` files, in a directory of your choosing.
 
+## Outline
+
 - [Setup](#setup)
 - [Usage](#usage)
 - [Troubleshooting](#troubleshooting)
 - [Feature additions](#feature-additions)
 - [Storage details](#storage-details)
 - [Acknowledgments](#acknowledgments)
-
 
 ## Setup
 
@@ -64,7 +65,6 @@ When you click `Save`, your notes are dumped to a `.json` file in the directory 
 - `paper_id: int`: The S2 paper ID; same as the filename.
 - `timestamp: int`: Output of Javascript `Date.now()`. Just gives a timestamp for when you saved this note.
 - `title: int`: Paper title.
-
 
 ## Acknowledgments
 

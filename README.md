@@ -47,11 +47,11 @@ Otherwise, feel free to open an issue with logs from both:
 - The JavaScript console.
 - The Flask backend server.
 
-## Feature additions (help welcome)
+## Feature additions / fixes (help welcome)
 
 I am very much a web programming amateur, so I did my best to hack something together, but I would definitely accept PR's. In particular:
 
-- A PR so that you don't have to reload the page in order for the notes to show up.
+- A PR so that you don't have to reload the page in order for the notes to show up. Right now, I'm using the page load event to trigger the notes field, [here](frontend/s2-notes.js#L186), but this doesn't always work. Is there some other event I should be triggering on?
 - A PR to auto-save the notes in some sensible fashion.
 
 ## Acknowledgments

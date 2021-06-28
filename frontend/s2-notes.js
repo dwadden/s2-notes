@@ -93,10 +93,16 @@ function get_document_info() {
         const paper_id = parseInt(document.querySelector('[data-selenium-selector="corpus-id"]').innerText.split(": ")[1]);
         const title = document.querySelector('[name="citation_title"]').content;
         const author = document.querySelector('[name="citation_author"]').content;
+        const doi_elem = document.querySelector('[class="doi__link"]');
+        const doi = doi_elem.textContent;
+        const doi_link = doi_elem.href;
         return {
             "paper_id": paper_id,
+            "doi": doi,
+            "doi_link": doi_link,
             "title": title,
-            "author": author
+            "author": author,
+            "timestamp": Date.now()
         }
     } catch (e) {
         alert("Unable to get document info from page");
@@ -136,13 +142,13 @@ function save_notes() {
         // If there was a problem getting document info, just return.
         return
     }
-    const notes = window.simplemde.value();
+    const notes = {"notes": window.simplemde.value()};
+
+    // Merge document info together with notes.
     const data = {
-        "paper_id": document_info.paper_id,
-        "title": document_info.title,
-        "author": document_info.author,
-        "notes": notes
-    };
+        ...document_info,
+        ...notes
+    }
 
     // Send a post request using `fetch`.
     const request = "http://127.0.0.1:5000/SetNotes"

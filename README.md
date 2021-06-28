@@ -42,7 +42,7 @@ Once you've got the Tampermonkey script installed and the backend server running
 - When you navigate to a new paper, you may need to refresh the page in order for the notes section to show up.
 - Make sure to *save your notes* by clicking the `Save` button (at the bottom left in the example above). Notes will not save automatically.
 
-More detail on these in the section on [feature additions](#feature-additions).
+More details in the [feature additions](#feature-additions) section below.
 
 ## Troubleshooting
 

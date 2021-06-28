@@ -19,13 +19,19 @@ It adds a notes section below the main information section on each paper. It sup
 
 This should work on Google Chrome, running on Mac:
 
-- Clone the repo.
-- Set the environment variable `S2_NOTES_DIR`, and create a directory at this location. This is where your notes will go. You can add a line like this to your `.bashrc` or `.bash_profile`:
+- Clone the repo and navigate to the repo's top-level directory.
+- Set up your Python environment. This can be done using `conda`:
+  ```
+  conda create --name s2-notes python=3.9
+  conda activate s2-notes
+  pip install -r requirements.txt
+  ```
+- Set the environment variable `S2_NOTES_DIR`, and create a directory at this location. Your notes will be saved as files in `S2_NOTES_DIR`. You can add a line like this to your `.bashrc` or `.bash_profile`:
   ```
   export S2_NOTES_DIR=[your-notes-go-here]
   ```
 - Install [Tampermonkey](https://www.tampermonkey.net) for Chrome.
-- Create a new blank Tampermonkey script. Copy the contents of [frontend/s2-notes.js](frontend/s2-notes.js) from this repo into the Tampermonkey script, and save the script.
+- Create a new blank Tampermonkey script. Copy the contents of [frontend/s2-notes.js](frontend/s2-notes.js) into the Tampermonkey script, and save the script.
   - See the Tampermonkey docs for information on how to create and activate a script.
 - In a terminal window, navigate to the `backend` subdirectory of this repo and enter `bash run.sh`. The server should start.
 

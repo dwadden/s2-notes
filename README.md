@@ -17,7 +17,7 @@ It adds a notes section below the main information section on each paper. It sup
 
 ## Setup
 
-This should work on Google Chrome, running on Mac:
+This should work with Google Chrome, running on Mac:
 
 - Clone the repo and navigate to the repo's top-level directory.
 - Set up your Python environment. This can be done using `conda`:
@@ -39,16 +39,18 @@ This should work on Google Chrome, running on Mac:
 
 Once you've got the Tampermonkey script installed and the backend server running, you should see a notes window like the one in the image above, for every article page on Semantic Scholar. Two caveats:
 
-- When you navigate to a new paper, you may need to refresh the page in order for the notes section to show up. I'll try to fix this, or I'd welcome a PR to do it!
-- Make sure to *save your notes*, they will not save automatically.
+- When you navigate to a new paper, you may need to refresh the page in order for the notes section to show up.
+- Make sure to *save your notes* by clicking the `Save` button (at the bottom left in the example above). Notes will not save automatically.
+
+More detail on these in the section on [feature additions](#feature-additions).
 
 ## Troubleshooting
 
-I can only offer "support" for Chrome on Mac.
+I can only offer support for Chrome on Mac. In general, if you don't see a notes section, try reloading the page.
 
-- If you see a text box for your notes, but it's way too small and doesn't have any Markdown formatting, it's probably because the required libraries didn't load in time. Just refresh the page and it should work.
+- If you see a text box for your notes, but it's very small and doesn't have any Markdown formatting, it's probably because the required libraries didn't load in time. Just refresh the page and it should work.
 
-Otherwise, feel free to open an issue with logs from both:
+Otherwise, feel free to open an issue, including logs from both:
 
 - The JavaScript console.
 - The Flask backend server.
@@ -58,7 +60,9 @@ Otherwise, feel free to open an issue with logs from both:
 I am very much a web programming amateur, so I did my best to hack something together, but I would definitely accept PR's. In particular:
 
 - A PR so that you don't have to reload the page in order for the notes to show up. Right now, I'm using the page load event to trigger the notes field, [here](frontend/s2-notes.js#L186), but this doesn't always work. Is there some other event I should be triggering on?
-- A PR to auto-save the notes in some sensible fashion.
+- A PR to auto-save the notes in some sensible fashion. Things I've tried, but didn't end up using:
+  - Save on every keystroke. This feels like too many actions.
+  - Save after some amount of time with no changes to the notes (like 100ms). I didn't do this because if you exit the page too quickly after making an edit, the notes won't be auto-saved.
 
 ## Storage details
 

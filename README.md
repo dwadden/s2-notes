@@ -1,38 +1,60 @@
 # Semantic Scholar notes
 
-Do you use Semantic Scholar? Do you take notes when you read papers? The goal of this repo is to let you record and view your paper notes in Semantic Scholar itself, like so:
+Do you use Semantic Scholar? Do you take notes when you read papers? This repo enables you to take write and access your paper notes without leaving Semantic Scholar, like so:
 
 <img src="img/example.png" alt="example" width="600"/>
-
-Semantic Scholar is an amazing academic search engine and also has functionality to organize a library of papers, similar to software like [Mendeley](https://www.mendeley.com/) or [Papers](https://www.papersapp.com/). But it doesn't offer a convenient way to take personalized notes and display them together with other information on the paper you're reading. This repo attempts (hackily) to add this feature.
 
 It adds a notes section below the main information section on each paper. It supports Markdown as well as Mathjax. The notes are stored locally on your machine as `.json` files, in a directory of your choosing.
 
 ## Setup
 
-I've only tried this with Google Chrome, running on a Macbook.
-
-Follow these steps:
+This should work on Google Chrome, running on Mac:
 
 - Clone the repo.
-- Set the environment variable `S2_NOTES_DIR`. It's probably easiest to put this in a startup file like your `.bash_profile` or `.bashrc`. Create a directory at this location. Your notes will go here
+- Set the environment variable `S2_NOTES_DIR`. It's probably easiest to put this in a startup file like your `.bash_profile` or `.bashrc`. Create a directory at this location. This is where your notes will go.
 - Install [Tampermonkey](https://www.tampermonkey.net) for Chrome.
-- Create a new blank Tampermonkey script. Copy the contents of `frontend/s2-notes.js` into the script, and save the script.
+- Create a new blank Tampermonkey script. Copy the contents of `frontend/s2-notes.js` from this repo into the Tampermonkey script, and save the script.
   - See the Tampermonkey docs for information on how to create and activate a script.
-- In a terminal window, navigate to the `backend` subdirectory and enter `bash run.sh`. The server should start.
+- In a terminal window, navigate to the `backend` subdirectory of this repo and enter `bash run.sh`. The server should start.
 
 ## Usage
 
 Once you've got the Tampermonkey script installed and the backend server running, you should see a notes window like the one in the image above every time you open a new article page on Semantic Scholar. Two caveats:
 
 - When you navigate to a new paper, you may need to refresh the page in order for the notes section to show up. I'll try to fix this, or I'd welcome a PR to do it!
-- Make sure to *save your notes*, they will not save automatically. PR's welcome.
+- Make sure to *save your notes*, they will not save automatically.
+
 
 ## Storage details
 
 When you click `Save`, your notes are dumped to a `.json` file in the directory given by the `S2_NOTES_DIR` environment variable. The files are named by their *Semantic Scholar ID*, which is a unique `int` associated with each paper. The following fields are recorded in the `json`.
 
-- `paper_id`: Semantic Scholar (S2) ID, same as the file name.
-- `title`: Paper title, according to S2.
-- `author`: First author for the paper, according to S2.
-- `notes`: Your notes, as plaintext.
+- `author: str`: First paper author, according to Semantic Scholar (S2).
+- `doi: (str | null)`: DOI. If available, you can use it to look up the paper at [doi.org](https://www.doi.org/).
+- `doi_link: (str | null)`: A DUI URL. If available, it should give a direct link to the paper.
+- `notes: str`: Your notes for this paper.
+- `paper_id: int`: The S2 paper ID; same as the filename.
+- `timestamp: int`: Output of Javascript `Date.now()`. Just gives a timestamp for when you saved this note.
+- `title: int`: Paper title.
+
+## Troubleshooting
+
+I can only offer "support" for Chrome on Mac.
+
+- If you see a text box for your notes, but it's way too small and doesn't have any Markdown formatting, it's probably because the required libraries didn't load in time. Just refresh the page and it should work.
+
+Otherwise, feel free to open an issue with logs from both:
+
+- The JavaScript console.
+- The Flask backend server.
+
+## Feature additions (help appreciated)
+
+I am very much a web programming amateur, so I did my best to hack something together, but I would definitely accept PR's. In particular:
+
+- A PR so that you don't have to reload the page in order for the notes to show up.
+- A PR to auto-save the notes in some sensible fashion.
+
+## Acknowledgments
+
+Thanks to [Jiechen Chen](https://www.linkedin.com/in/jiechen-chen/) for writing the backend!

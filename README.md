@@ -13,17 +13,16 @@ This should work on Google Chrome, running on Mac:
 - Clone the repo.
 - Set the environment variable `S2_NOTES_DIR`, and create a directory at this location. It's probably easiest to put this in a startup file like your `.bash_profile` or `.bashrc`. This is where your notes will go.
 - Install [Tampermonkey](https://www.tampermonkey.net) for Chrome.
-- Create a new blank Tampermonkey script. Copy the contents of `frontend/s2-notes.js` from this repo into the Tampermonkey script, and save the script.
+- Create a new blank Tampermonkey script. Copy the contents of [frontend/s2-notes.js](frontend/s2-notes.js) from this repo into the Tampermonkey script, and save the script.
   - See the Tampermonkey docs for information on how to create and activate a script.
 - In a terminal window, navigate to the `backend` subdirectory of this repo and enter `bash run.sh`. The server should start.
 
 ## Usage
 
-Once you've got the Tampermonkey script installed and the backend server running, you should see a notes window like the one in the image above every time you open a new article page on Semantic Scholar. Two caveats:
+Once you've got the Tampermonkey script installed and the backend server running, you should see a notes window like the one in the image above, for every article page on Semantic Scholar. Two caveats:
 
 - When you navigate to a new paper, you may need to refresh the page in order for the notes section to show up. I'll try to fix this, or I'd welcome a PR to do it!
 - Make sure to *save your notes*, they will not save automatically.
-
 
 ## Storage details
 
@@ -48,7 +47,7 @@ Otherwise, feel free to open an issue with logs from both:
 - The JavaScript console.
 - The Flask backend server.
 
-## Feature additions (help appreciated)
+## Feature additions (help welcome)
 
 I am very much a web programming amateur, so I did my best to hack something together, but I would definitely accept PR's. In particular:
 

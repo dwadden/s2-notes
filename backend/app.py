@@ -53,7 +53,7 @@ def set_notes():
     }
 
     with open(f"{NOTES_DIR}/{paper_id}.json", "w") as f:
-        json.dump(file_json, f, sort_keys=4, indent=True)
+        json.dump(file_json, f, sort_keys=True, indent=4)
 
     return jsonify({
         "data saved to " + str(paper_id) + ".json": file_json

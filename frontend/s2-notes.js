@@ -93,9 +93,18 @@ function get_document_info() {
         const paper_id = parseInt(document.querySelector('[data-selenium-selector="corpus-id"]').innerText.split(": ")[1]);
         const title = document.querySelector('[name="citation_title"]').content;
         const author = document.querySelector('[name="citation_author"]').content;
+
+        // Get DOI info, if available. Else set to `null`.
         const doi_elem = document.querySelector('[class="doi__link"]');
-        const doi = doi_elem.textContent;
-        const doi_link = doi_elem.href;
+        let doi, doi_link;
+        if (doi_elem === null) {
+            doi = null;
+            doi_link = null;
+        } else {
+            doi = doi_elem.textContent;
+            doi_link = doi_elem.href;
+        }
+
         return {
             "paper_id": paper_id,
             "doi": doi,

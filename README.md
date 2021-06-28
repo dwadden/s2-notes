@@ -1,6 +1,6 @@
 # Semantic Scholar notes
 
-Do you use Semantic Scholar? Do you take notes when you read papers? This repo enables you to take write and access your paper notes without leaving Semantic Scholar, like so:
+Do you use Semantic Scholar? Do you take notes when you read papers? This repo enables you to write and view your paper notes without leaving Semantic Scholar, like so:
 
 <img src="img/example.png" alt="example" width="600"/>
 

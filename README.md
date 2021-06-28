@@ -11,7 +11,7 @@ It adds a notes section below the main information section on each paper. It sup
 This should work on Google Chrome, running on Mac:
 
 - Clone the repo.
-- Set the environment variable `S2_NOTES_DIR`. It's probably easiest to put this in a startup file like your `.bash_profile` or `.bashrc`. Create a directory at this location. This is where your notes will go.
+- Set the environment variable `S2_NOTES_DIR`, and create a directory at this location. It's probably easiest to put this in a startup file like your `.bash_profile` or `.bashrc`. This is where your notes will go.
 - Install [Tampermonkey](https://www.tampermonkey.net) for Chrome.
 - Create a new blank Tampermonkey script. Copy the contents of `frontend/s2-notes.js` from this repo into the Tampermonkey script, and save the script.
   - See the Tampermonkey docs for information on how to create and activate a script.

@@ -1,1 +1,1 @@
-FLASK_APP=app.py flask run
+FLASK_APP=app.py FLASK_DEBUG=True flask run

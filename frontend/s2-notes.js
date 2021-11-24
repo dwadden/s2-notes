@@ -51,14 +51,9 @@ function add_notes_field() {
           </div>
         </div>`;
 
-    // Add the HTML.
-    let currentDiv = document.getElementById("extracted");
-    if (currentDiv === null) {
-        // Deal with the case where there's no extracted figures (happens
-        // sometimes.)
-        currentDiv = document.getElementById("citing-papers");
-    }
-    currentDiv.insertAdjacentHTML("beforebegin", my_html)
+    // Add the HTML as the first card in the card container.
+    const containerDiv = document.getElementsByClassName("card-container")[0];
+    containerDiv.insertAdjacentHTML("afterbegin", my_html)
 
     // MathJax config from
     // https://gist.github.com/chooco13/c280c1cc6584c97af85307028ecaebb1.

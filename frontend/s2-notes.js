@@ -85,7 +85,7 @@ function add_notes_field() {
 function get_document_info() {
     // Get S2 ID and title from the webpage.
     try {
-        const paper_id = parseInt(document.querySelector('[data-selenium-selector="corpus-id"]').innerText.split(": ")[1]);
+        const paper_id = parseInt(document.querySelector('[data-test-id="corpus-id"]').innerText.split(": ")[1]);
         const title = document.querySelector('[name="citation_title"]').content;
         const author = document.querySelector('[name="citation_author"]').content;
 

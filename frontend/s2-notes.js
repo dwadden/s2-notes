@@ -58,7 +58,7 @@ function add_notes_field() {
     // MathJax config from
     // https://gist.github.com/chooco13/c280c1cc6584c97af85307028ecaebb1.
     MathJax.Hub.Config({
-        tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+        tex2jax: { inlineMath: [["$", "$"], ["\\(", "\\)"]] }
     });
 
     // Convert to markdown.
@@ -66,11 +66,11 @@ function add_notes_field() {
     window.simplemde = new SimpleMDE({
         element: document.getElementById("note-text"),
         spellChecker: false,
-        previewRender: function(plainText) {
+        previewRender: function (plainText) {
             var preview = document.getElementsByClassName("editor-preview-side")[0];
             preview.innerHTML = this.parent.markdown(plainText);
-            preview.setAttribute('id','editor-preview')
-            MathJax.Hub.Queue(["Typeset",MathJax.Hub,"editor-preview"]);
+            preview.setAttribute('id', 'editor-preview')
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub, "editor-preview"]);
             return preview.innerHTML;
         }
     });
@@ -153,7 +153,7 @@ function save_notes() {
         // If there was a problem getting document info, just return.
         return
     }
-    const notes = {"notes": window.simplemde.value()};
+    const notes = { "notes": window.simplemde.value() };
 
     // Merge document info together with notes.
     const data = {

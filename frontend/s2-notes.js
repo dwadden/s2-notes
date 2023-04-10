@@ -87,7 +87,14 @@ function get_document_info() {
     try {
         const paper_id = parseInt(document.querySelector('[data-test-id="corpus-id"]').innerText.split(": ")[1]);
         const title = document.querySelector('[name="citation_title"]').content;
-        const author = document.querySelector('[name="citation_author"]').content;
+
+        // Sometimes author isn't defined; just set to null in these cases
+        const author_container = document.querySelector('[name="citation_author"]');
+        if (author_container === null) {
+            const author = null;
+        } else {
+            const author = author_container.content;
+        }
 
         // Get DOI info, if available. Else set to `null`.
         const doi_elem = document.querySelector('[class="doi__link"]');

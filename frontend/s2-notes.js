@@ -90,10 +90,11 @@ function get_document_info() {
 
         // Sometimes author isn't defined; just set to null in these cases
         const author_container = document.querySelector('[name="citation_author"]');
+        let author;
         if (author_container === null) {
-            const author = null;
+            author = null;
         } else {
-            const author = author_container.content;
+            author = author_container.content;
         }
 
         // Get DOI info, if available. Else set to `null`.
